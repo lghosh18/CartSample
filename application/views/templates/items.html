@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-lg-12 margin-tb">
+        <div class="pull-left">
+            <h2 style="font-size: 24px;">Tests/Packages</h2>
+        </div>
+        <div class="pull-right" style="padding-top:30px">
+            <div class="pull-left" style="padding-right:5px; padding-top: 5px;">Total: {{totalCartValue}}</div>
+            <div class="box-tools" style="display:inline-table">
+              <div class="input-group">
+                  <input type="text" class="form-control input-sm ng-valid ng-dirty" placeholder="Search" ng-change="searchDB()" ng-model="searchText" name="table_search" title="" tooltip="" data-original-title="Min character length is 3">
+                  <span class="input-group-addon">Search</span>
+              </div>
+            </div>
+            <button class="btn btn-success" ng-click="redirect();" >Go To Cart</button>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered pagin-table">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th style="text-align: right;">Price</th>
+            <th style="text-align: center; width: 220px;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr dir-paginate="value in data | itemsPerPage:5" total-items="totalItems">
+            <td>{{ ((pageNumber- 1) * 5) + ($index + 1) }}</td>
+            <td>{{ value.title }}</td>
+            <td>{{ value.description }}</td>
+            <td style="text-align: right;">{{ value.selling_price }}</td>
+            <td style="text-align: center;">
+            <button ng-show="!value.present_in_cart" ng-click="addToCart(value.id, $index)" class="btn btn-primary" >Add To Cart</button>
+            <button ng-show="value.present_in_cart" ng-click="removeFromCart(value.id, $index)" class="btn btn-danger" >Remove</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<dir-pagination-controls class="pull-right" on-page-change="pageChanged(newPageNumber)" template-url="templates/dirPagination.html" ></dir-pagination-controls>
